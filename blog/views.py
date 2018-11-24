@@ -16,7 +16,7 @@ class PostListView(ListView):
 
     # orm querry that gets all posts sorted by published_date > field lookups
     def get_queryset(self):
-        return Post.objects.filter(published_date_lte=timezone.now()).order_by('-published_date')
+        return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 
 class PostDetailView(DetailView):
     model = Post
@@ -54,8 +54,9 @@ class DraftListView(LoginRequiredMixin, ListView):
 ################################# comments
 @login_required
 def post_publish(request,pk):
+    print('in publiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiish mmmmmmmmmmmeethod')
     post = get_object_or_404(Post,pk=pk)
-    post.publish
+    post.publish()
     return redirect('post_detail', pk=pk)
 
 
@@ -74,12 +75,13 @@ def add_comment_to_post(request,pk):
             return redirect('post_detail',pk=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'blog/commment_form.html', {'form':form})
+    return render(request, 'blog/comment_form.html', {'form':form})
 
 @login_required
 def comment_approve(request,pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
+    print('in the comment_approve method in the view')
     return redirect('post_detail', pk=comment.post.pk)
 
 @login_required

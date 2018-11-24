@@ -122,5 +122,6 @@ STATIC_DIR = os.path.join(BASE_DIR,'static')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
-# redirect users to homepage after they logged in
+# redirect users to homepage after they logged in/loggedout
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
